@@ -1,0 +1,47 @@
+Init Project
+    yarn add --dev hardhat
+    yarn hardhat
+    touch files .gitignore, .prettierrc, .prettierignore, .env
+    update hardhat.config as needed
+        yarn add --dev dotenv
+        yarn add --dev @nomiclabs/hardhat-etherscan
+        yarn add hardhat-gas-reporter --dev
+        yarn add --dev solidity-coverage
+        yarn add --dev solhint
+            add .solhint.json
+            add .solhintignore
+            To use type yarn solhint contract/*.sol in cli    
+    Create smart contracts
+        compile to check for errors (yarn hardhat compile)
+        Error could not fnd library @chainlinks/contracts
+        yarn add --dev @chainlink/contracts (To fix above error)
+    Add hardhat-deploy to help with testing and deployment
+        yarn add --dev hardhat-deploy
+        add require("hardhat-deploy") to hardhat-config
+        hardhat-deploy package will give us new tasks in yarn hardhat command
+        Now deploy scripts will be written in deploy folder instead of scripts
+        When yarn hardhat deploy commmand is run, all scripts in deploy folder will run
+        Need to add hardhat-deploy-ethers library as well to make this work
+            yarn add --dev @nomiclabs/hardhat-ethers@npm:hardhat-deploy-ethers ethers
+            The above line of code adds hardhat-deploy-ethers 
+            and overrides hardhat-ethers with hardhat-deploy-ethers
+    Mocks
+    We are using an external contract (chainlink) for pricefeed data. Depending on what blockchain we are on
+    we need to use different addresses for chainlink?
+    But if we are on out localhost there is exists no pricefeed address for this. So we create a mock of the
+    chainlink contract. So we will deploy a minimal version of it for our testing
+    To deploy mock, create a new deploy script
+    So basically we are creating a mock contract that emulates a contract, can be imported!
+
+    yarn hardhat deploy --tags // Will only run deploy scripts that have tags indicated
+
+    yarn hardhate node will now initialize with deploy script contracts already deployed
+
+yarn hardhat test // To run tests in test folder
+yarn hardhat coverage // To check how much of codebase is covered with testing
+
+staging tests are tests that can be run on a smart contract that has been deployed 
+
+to run scripts in scripts folder.. which is basically like calling a function of the contract
+yarn hardhat node
+yarn hardhat run .scripts.scriptName.js --network localhost
